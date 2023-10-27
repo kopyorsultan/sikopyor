@@ -6,7 +6,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\ProdukController;
-
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -20,9 +20,8 @@ use App\Http\Controllers\ProdukController;
 |
 */
 
-Route::get('/', function () {
-    return view('satuan/index');
-}); 
+
+Route::resource('/', DashboardController::class);
 
 Route::resource('stand', StandController::class); 
 Route::resource('supplier', SupplierController::class); 
