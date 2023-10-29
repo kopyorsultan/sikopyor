@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SatuanModel;
 
 class SatuanController extends Controller
 {
@@ -11,11 +12,11 @@ class SatuanController extends Controller
      */
     public function index()
     {
-         //  $satuans = Satuan::get();
+          $satuans = SatuanModel::get();
 
          return view('satuan.index', [
             'title' => 'Data Satuan',
-            // 'satuan' => $satuan 
+            'satuan' => $satuans 
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SupplierModel;
 
 class SupplierController extends Controller
 {
@@ -11,11 +12,11 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //  $satuans = Supplier::get();
+         $supplier = SupplierModel::get();
 
         return view('supplier.index', [
             'title' => 'Data Supplier',
-            // 'supplier' => $supplier 
+            'supplier' => $supplier 
         ]);
     }
 

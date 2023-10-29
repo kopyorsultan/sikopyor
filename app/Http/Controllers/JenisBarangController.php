@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JenisBarangModel;
 
 class JenisBarangController extends Controller
 {
@@ -11,11 +12,11 @@ class JenisBarangController extends Controller
      */
     public function index()
     {
-         //  $satuans = Jenisbarang::get();
+          $jenisbarang = JenisbarangModel::get();
 
          return view('jenisbarang.index', [
             'title' => 'Data Jenis Barang',
-            // 'jenisbarang' => $jenisbarang
+            'jenisbarang' => $jenisbarang
         ]);
     }
 

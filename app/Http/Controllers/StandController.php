@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\StandModel;
 
 class StandController extends Controller
 {
@@ -11,11 +12,11 @@ class StandController extends Controller
      */
     public function index()
     {
-        // $satuans = Satuan::get();
+        $stand = StandModel::with(['users'])->get();
 
         return view('stand.index', [
             'title' => 'Data stand',
-            // 'stand' => $stand 
+            'stand' => $stand 
         ]);
     }
 

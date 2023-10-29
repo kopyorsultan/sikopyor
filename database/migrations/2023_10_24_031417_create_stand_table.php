@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stand', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('nama');
+            $table->string('nama_stand');
             $table->string('alamat');
             // Add other attributes as needed
             $table->timestamps();
