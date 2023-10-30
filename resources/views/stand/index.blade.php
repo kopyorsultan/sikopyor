@@ -11,6 +11,7 @@
 <div class="card">
   <h5 class="card-header">Data Stand</h5>
   <div class="card-body">
+    <a href=""class="btn rounded-pill btn-primary mb-3">Tambah</a>
     <div class="table-responsive text-nowrap">
       <table class="table table-bordered">
         <thead>
@@ -26,7 +27,7 @@
         @foreach ($stand as $s)
 
           <tr>
-            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <span class="fw-medium">{{ $loop->iteration }}</span></td>
+          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <span class="fw-medium">{{ $loop->iteration }}</span></td>
             <td>{{ $s->nama_stand}}</td>
             <td>
             {{ $s->users->nama}}

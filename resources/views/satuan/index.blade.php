@@ -11,6 +11,7 @@
 <div class="card">
   <h5 class="card-header">Data Satuan</h5>
   <div class="card-body">
+  <a href=""class="btn rounded-pill btn-primary mb-3">Tambah</a>
     <div class="table-responsive text-nowrap">
       <table class="table table-bordered">
         <thead>

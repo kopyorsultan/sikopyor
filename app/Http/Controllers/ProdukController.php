@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\JenisBarangModel;
+use App\Models\ProdukModel;
 
 class ProdukController extends Controller
 {
@@ -12,11 +12,11 @@ class ProdukController extends Controller
      */
     public function index()
     {
-         //  $satuans = Produk::get();
-
+        $produk = ProdukModel::with(['stand','satuan','jenis_barang'])->get();
+// dd($produk);
          return view('produk.index', [
             'title' => 'Data Produk',
-            // 'produk' => $produk 
+            'produk' => $produk 
         ]);
     }
 
