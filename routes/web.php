@@ -7,6 +7,7 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsersController;
 
 
 /*
@@ -23,8 +24,9 @@ use App\Http\Controllers\DashboardController;
 
 Route::resource('/', DashboardController::class);
 
-Route::resource('stand', StandController::class); 
-Route::resource('supplier', SupplierController::class); 
-Route::resource('satuan', SatuanController::class); 
-Route::resource('jenis-barang', JenisBarangController::class); 
-Route::resource('produk', ProdukController::class); 
+Route::resource('stand', StandController::class);
+Route::resource('supplier', SupplierController::class);
+Route::resource('satuan', SatuanController::class);
+Route::resource('jenis-barang', JenisBarangController::class);
+Route::resource('produk', ProdukController::class);
+Route::resource('users', usersController::class);
