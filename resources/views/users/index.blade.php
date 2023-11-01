@@ -27,16 +27,15 @@
             </thead>
             <tbody>
               @foreach ($users as $u)
-
               <tr>
                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <span class="fw-medium">{{ $loop->iteration }}</span></td>
-                <td>{{ $u->role->nama_role}}</td>
+                <td>{{ $u->role->nama_role }}</td>
                 <td>
-                  {{ $u->nama}}
+                  {{ $u->nama }}
                 </td>
-                <td>{{ $u->no_telp}}</td>
-                <td>{{ $u->jenis_kelamin}}</td>
-                <td>{{ $u->alamat}}</td>
+                <td>{{ $u->no_telp }}</td>
+                <td>{{ $u->jenis_kelamin }}</td>
+                <td>{{ $u->alamat }}</td>
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
@@ -70,7 +69,14 @@
         <div class="row">
           <div class="col mb-3">
             <label for="nameWithTitle" class="form-label">Role</label>
-            <input type="text" id="role_id" class="form-control" placeholder="Role" />
+            <select id="role_id" class="select2 form-select" data-allow-clear="true">
+              <option value="">--- Pilih Role ---</option>
+              @foreach ($role as $r)
+              <option value="{{ $r->id }}">
+                {{ $r->nama_role }}
+              </option>
+              @endforeach
+            </select>
           </div>
         </div>
         <div class="row g-2">
@@ -78,20 +84,33 @@
             <label for="emailWithTitle" class="form-label">Nama </label>
             <input type="text" id="nama" class="form-control" placeholder="Nama" />
           </div>
+        </div>
+        <div class="row g-2">
           <div class="col mb-0">
             <label for="dobWithTitle" class="form-label">No Telp</label>
             <input type="text" id="no_telp" class="form-control" placeholder="No Telp" />
           </div>
-
+          <div class="col mb-0">
+            <label for="dobWithTitle" class="form-label">Jenis Kelamin</label>
+            <select id="role_id" class="select2 form-select" data-allow-clear="true">
+              <option value="">--- Pilih Jenis Kelamin ---</option>
+              @foreach ($role as $r)
+              <option value="Laki-Laki">Laki-Laki</option>
+              <option value="Perempuan">Perempuan</option>
+              @endforeach
+            </select>
+          </div>
         </div>
         <div class="row g-2">
           <div class="col mb-0">
-            <label for="dobWithTitle" class="form-label">Jenis Kelamin</label>
-            <input type="text" id="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin" />
-          </div>
-          <div class="col mb-0">
-            <label for="dobWithTitle" class="form-label">Alamat</label>
+            <label for="emailWithTitle" class="form-label">Alamat </label>
             <input type="text" id="alamat" class="form-control" placeholder="Alamat" />
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col mb-0">
+            <label for="emailWithTitle" class="form-label">Password </label>
+            <input type="password" id="password" class="form-control" placeholder="Password" />
           </div>
         </div>
       </div>
@@ -104,5 +123,4 @@
     </div>
   </div>
 </div>
-
 @endsection
