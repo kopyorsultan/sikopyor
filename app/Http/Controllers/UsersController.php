@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\RoleModel;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -37,7 +38,43 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data
+        $customAttributes = [
+            'role_id' => 'Role',
+            'name' => 'Nama',
+            'no_telp' => 'Nomor Telepon',
+            'jenis_kelamin' => 'Jenis Kelamin',
+            'alamat' => 'Alamat',
+            'img' => 'Foto',
+            'email' => 'Email',
+            'password' => 'Password',
+        ];
+
+        $request->validate([
+            'role_id' => 'required|integer',
+            'name' => 'max:255',
+            'no_telp' => 'integer',
+            'jenis_kelamin' => 'max:255|required',
+            'alamat' => 'max:255',
+            'img' => 'mimes:jpeg,jpg,png,gif,svg|image|required',
+            'email' => 'max:255|required',
+            'password' => 'max:255|required',
+        ], [], $customAttributes);
+
+        $request['password'] = Hash::make($request->password);
+        $input = $request->all();
+
+        if ($image = $request->file('img')) {
+            $destinationPath = 'assets/img/profile';
+            $profileImage = date('YmdHis') . "." . $image->extension();
+            $image->move($destinationPath, $profileImage);
+            $input['img'] = "$profileImage";
+        } else {
+            unset($input['img']);
+        }
+
+        $user = User::create($input);
+        return redirect('/users')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -69,6 +106,7 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::destroy($id);
+        return redirect('/users')->with('success', 'Data Berhasil Dihapus!');
     }
 }

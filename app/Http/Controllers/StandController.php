@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\StandModel;
+use App\Models\User;
 
 class StandController extends Controller
 {
@@ -12,11 +13,13 @@ class StandController extends Controller
      */
     public function index()
     {
+        $users = User::karyawan()->get();
         $stand = StandModel::with(['users'])->get();
 
         return view('stand.index', [
             'title' => 'Data stand',
-            'stand' => $stand 
+            'stand' => $stand,
+            'users' => $users,
         ]);
     }
 
@@ -33,7 +36,24 @@ class StandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data
+        $customAttributes = [
+            'user_id' => 'User',
+            'name_stand' => 'Nama Stand',
+            'alamat' => 'Alamat',
+
+        ];
+
+        $request->validate([
+            'user_id' => 'required|integer',
+            'name' => 'max:255',
+            'alamat' => 'max:255',
+        ], [], $customAttributes);
+
+        $input = $request->all();
+
+        $stand = StandModel::create($input);
+        return redirect('/stand')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -65,6 +85,7 @@ class StandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        StandModel::destroy($id);
+        return redirect('/stand')->with('success', 'Data Berhasil Dihapus!');
     }
 }
