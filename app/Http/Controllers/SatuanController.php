@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SatuanModel;
+use App\Models\Satuan;
 
 class SatuanController extends Controller
 {
@@ -12,11 +13,12 @@ class SatuanController extends Controller
      */
     public function index()
     {
-          $satuans = SatuanModel::get();
 
-         return view('satuan.index', [
+        $satuans = SatuanModel::get();
+
+        return view('satuan.index', [
             'title' => 'Data Satuan',
-            'satuan' => $satuans 
+            'satuan' => $satuans
         ]);
     }
 
@@ -33,7 +35,19 @@ class SatuanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data 
+        $customAttributes = [
+            'nama_satuan' => 'Nama Satuan'
+        ];
+
+        $request->validate([
+            'nama_satuan' => 'required|max:255',
+        ], [], $customAttributes);
+
+        $input = $request->all();
+
+        $satuan = SatuanModel::create($input);
+        return redirect('/satuan')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -65,6 +79,7 @@ class SatuanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        SatuanModel::destroy($id);
+        return redirect('/satuan')->with('success', 'Data Berhasil Dihapus!');
     }
 }

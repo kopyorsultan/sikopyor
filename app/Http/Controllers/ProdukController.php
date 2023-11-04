@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProdukModel;
+use App\Models\SatuanModel;
+use App\Models\JenisBarangModel;
+use App\Models\StandModel;
+
 
 class ProdukController extends Controller
 {
@@ -12,11 +16,17 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produk = ProdukModel::with(['stand','satuan','jenis_barang'])->get();
-// dd($produk);
-         return view('produk.index', [
+        $namasatuan = SatuanModel::get();
+        $namajenis = JenisBarangModel::get();
+        $namastand = StandModel::get();
+        $produk = ProdukModel::with(['stand', 'satuan', 'jenis_barang'])->get();
+        // dd($produk);
+        return view('produk.index', [
             'title' => 'Data Produk',
-            'produk' => $produk 
+            'produk' => $produk,
+            'namasatuan' => $namasatuan,
+            'namajenis' => $namajenis,
+            'namastand' => $namastand
         ]);
     }
 
@@ -33,7 +43,37 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data 
+        $customAttributes = [
+            'nama_stand' => 'Nama Stand',
+            'nama_produk' => 'Nama Produk',
+            'harga_produk' => 'Harga Produk',
+            'stock' => 'Stock',
+            'nama_satuan' => 'Nama Satuan',
+            'jenis_barang' => 'Jenis Barang',
+            'barcode'  => 'Barcode',
+            'foto_produk'  => 'Foto Produk'
+
+        ];
+
+        $request->validate([
+            'nama_stand' => 'required|max:255',
+            'nama_produk'  => 'required|max:255',
+            'harga_produk'  => 'required|integer',
+            'stock'  => 'required|integer',
+            'nama_satuan'  => 'required|max:255',
+            'jenis_barang'  => 'required|max:255',
+            'barcode'  => 'integer|max:255',
+            'foto_produk'  => 'img',
+
+
+
+        ], [], $customAttributes);
+
+        $input = $request->all();
+
+        $produk = ProdukModel::create($input);
+        return redirect('/p')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -65,6 +105,7 @@ class ProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        ProdukModel::destroy($id);
+        return redirect('/produk')->with('success', 'Data Berhasil Dihapus!');
     }
 }

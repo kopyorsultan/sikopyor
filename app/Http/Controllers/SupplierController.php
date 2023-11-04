@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SupplierModel;
+use App\Models\User;
+
 
 class SupplierController extends Controller
 {
@@ -12,11 +14,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-         $supplier = SupplierModel::get();
+
+        $supplier = SupplierModel::get();
+
 
         return view('supplier.index', [
             'title' => 'Data Supplier',
-            'supplier' => $supplier 
+            'supplier' => $supplier
+
         ]);
     }
 
@@ -33,7 +38,24 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data
+        $customAttributes = [
+            'nama_toko' => 'Nama Toko',
+            'alamat' => 'Alamat',
+            'no_telp' => 'No Telp',
+
+        ];
+
+        $request->validate([
+            'nama_toko' => 'max:255|required',
+            'alamat' => 'max:255|required',
+            'no_telp' => 'required|integer'
+        ], [], $customAttributes);
+
+        $input = $request->all();
+
+        $supplier = SupplierModel::create($input);
+        return redirect('/supplier')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -65,6 +87,7 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        SupplierModel::destroy($id);
+        return redirect('/supplier')->with('success', 'Data Berhasil Dihapus!');
     }
 }

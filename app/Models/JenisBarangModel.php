@@ -11,4 +11,9 @@ class JenisBarangModel extends Model
     protected $table = 'jenis_barang';
 
     protected $guarded = [];
+    public function users()
+
+    {
+        return $this->belongsTo(UsersModel::class, 'jenis_barang');
+    }
 }

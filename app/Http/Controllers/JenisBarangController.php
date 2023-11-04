@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\JenisBarangModel;
+use App\Models\JenisBarang;
 
 class JenisBarangController extends Controller
 {
@@ -12,11 +13,13 @@ class JenisBarangController extends Controller
      */
     public function index()
     {
-          $jenisbarang = JenisbarangModel::get();
 
-         return view('jenisbarang.index', [
+        $jenisbarang = JenisbarangModel::get();
+
+        return view('jenisbarang.index', [
             'title' => 'Data Jenis Barang',
             'jenisbarang' => $jenisbarang
+
         ]);
     }
 
@@ -33,7 +36,22 @@ class JenisBarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // menambahkan data
+        $customAttributes = [
+            'nama_jenis' => 'Nama Jenis'
+
+
+        ];
+
+        $request->validate([
+            'nama_jenis' => 'required|max:255'
+
+        ], [], $customAttributes);
+
+        $input = $request->all();
+
+        $jenisbarang = JenisBarangModel::create($input);
+        return redirect('/jenis-barang')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
@@ -65,6 +83,7 @@ class JenisBarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        JenisBarangModel::destroy($id);
+        return redirect('/jenis-barang')->with('success', 'Data Berhasil Dihapus!');
     }
 }
