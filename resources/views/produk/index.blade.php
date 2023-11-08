@@ -48,7 +48,12 @@
                                         <td>{{ $p->stock }}</td>
                                         <td>{{ $p->satuan->nama_satuan }}</td>
                                         <td>{{ $p->jenis_barang->nama_jenis }}</td>
-                                        <td>{{ $p->foto_produk }}</td>
+                                        <td>
+                                            @if ($p->foto_produk)
+                                                <img style="max-width:100px; max-height:100px"
+                                                    src="{{ url('/assets/img/produk') . '/' . $p->foto_produk }}">
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -89,13 +94,13 @@
                     <h5 class="modal-title" id="modalCenterTitle">Tambah Data Produk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="/produk">
+                <form method="post" action="/produk"enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="nameWithTitle" class="form-label">Stand</label>
-                                <select id="user_id" name="user_id" class="select2 form-select" data-allow-clear="true">
+                                <select id="stand_id" name="stand_id" class="select2 form-select" data-allow-clear="true">
                                     <option value="">--- Pilih Stand ---</option>
                                     @foreach ($namastand as $ns)
                                         <option value="{{ $ns->id }}">
@@ -103,6 +108,9 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('stand_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row g-2">
@@ -110,11 +118,17 @@
                                 <label for="emailWithTitle" class="form-label">Nama Produk</label>
                                 <input type="text" id="nama_produk" name="nama_produk" class="form-control"
                                     placeholder="Nama Produk" />
+                                @error('nama_produk')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col mb-0">
                                 <label for="dobWithTitle" class="form-label">Harga Produk</label>
                                 <input type="text" id="harga_produk" name="harga_produk" class="form-control"
                                     placeholder="Harga Produk" />
+                                @error('harga_produk')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row g-2">
@@ -122,10 +136,14 @@
                                 <label for="emailWithTitle" class="form-label">Stock</label>
                                 <input type="text" id="stock" name="stock" class="form-control"
                                     placeholder="Stock" />
+                                @error('stock')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col mb-0">
                                 <label for="dobWithTitle" class="form-label">Satuan</label>
-                                <select id="user_id" name="user_id" class="select2 form-select" data-allow-clear="true">
+                                <select id="satuan_id" name="satuan_id" class="select2 form-select"
+                                    data-allow-clear="true">
                                     <option value="">--- Pilih Satuan ---</option>
                                     @foreach ($namasatuan as $ns)
                                         <option value="{{ $ns->id }}">
@@ -133,12 +151,15 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('jenis_barang_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col mb-0">
                                 <label for="emailWithTitle" class="form-label">Jenis</label>
-                                <select id="user_id" name="user_id" class="select2 form-select"
+                                <select id="jenis_barang_id" name="jenis_barang_id" class="select2 form-select"
                                     data-allow-clear="true">
                                     <option value="">--- Pilih Jenis ---</option>
                                     @foreach ($namajenis as $nj)
@@ -147,17 +168,27 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('jenis_barang_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
 
                             </div>
                             <div class="col mb-0">
                                 <label for="dobWithTitle" class="form-label">Barcode</label>
-                                <input type="text" id="barcode" class="form-control" placeholder="barcode" />
+                                <input type="text" id="barcode" name="barcode"class="form-control"
+                                    placeholder="barcode" />
+                                @error('barcode')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col mb-0">
-                                <label for="emailWithTitle" class="form-label">Foto Produk</label>
-                                <input type="text" id="foto_produk" class="form-control" placeholder="foto produk" />
+                                <label for="foto_produk" class="form-label">Foto</label>
+                                <input class="form-control" type="file" id="foto_produk" name="foto_produk">
+                                @error('foto_produk')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>

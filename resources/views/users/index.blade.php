@@ -30,6 +30,7 @@
                                     <th>No Telepone</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Alamat</th>
+                                    <th>Foto</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -46,6 +47,14 @@
                                         <td>{{ $u->jenis_kelamin }}</td>
                                         <td>{{ $u->alamat }}</td>
                                         <td>
+                                            @if ($u->img)
+                                                <img style="max-width:50px; max-height:50px"
+                                                    src="{{ url('/assets/img/profile') . '/' . $u->img }}">
+                                            @endif
+                                        </td>
+                                        <td>
+
+
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown"><i

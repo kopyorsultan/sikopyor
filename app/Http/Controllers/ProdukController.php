@@ -45,35 +45,43 @@ class ProdukController extends Controller
     {
         // menambahkan data 
         $customAttributes = [
-            'nama_stand' => 'Nama Stand',
+            'stand_id' => 'Nama Stand',
             'nama_produk' => 'Nama Produk',
             'harga_produk' => 'Harga Produk',
             'stock' => 'Stock',
-            'nama_satuan' => 'Nama Satuan',
-            'jenis_barang' => 'Jenis Barang',
+            'satuan_id' => 'Nama Satuan',
+            'jenis_barang_id' => 'Jenis Barang',
             'barcode'  => 'Barcode',
             'foto_produk'  => 'Foto Produk'
 
         ];
 
         $request->validate([
-            'nama_stand' => 'required|max:255',
+            'stand_id' => 'required|max:255',
             'nama_produk'  => 'required|max:255',
             'harga_produk'  => 'required|integer',
             'stock'  => 'required|integer',
-            'nama_satuan'  => 'required|max:255',
-            'jenis_barang'  => 'required|max:255',
+            'satuan_id'  => 'required|max:255',
+            'jenis_barang_id'  => 'required|max:255',
             'barcode'  => 'integer|max:255',
-            'foto_produk'  => 'img',
+            'foto_produk'  => 'mimes:jpeg,jpg,png,gif,svg|image|required'
 
 
 
         ], [], $customAttributes);
 
         $input = $request->all();
+        if ($image = $request->file('foto_produk')) {
+            $destinationPath = 'assets/img/produk';
+            $profileImage = date('YmdHis') . "." . $image->extension();
+            $image->move($destinationPath, $profileImage);
+            $input['foto_produk'] = "$profileImage";
+        } else {
+            unset($input['foto_produk']);
+        }
 
         $produk = ProdukModel::create($input);
-        return redirect('/p')->with('success', 'Data Berhasil Ditambahkan!');
+        return redirect('/produk')->with('success', 'Data Berhasil Ditambahkan!');
     }
 
     /**
