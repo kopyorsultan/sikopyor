@@ -57,4 +57,8 @@ class User extends Authenticatable
             ->where('role.nama_role', 'karyawan')
             ->select('users.*');
     }
+    public function stands()
+    {
+        return $this->hasMany(StandModel::class, 'user_id');
+    }
 }

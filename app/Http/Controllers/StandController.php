@@ -85,7 +85,17 @@ class StandController extends Controller
      */
     public function destroy(string $id)
     {
-        StandModel::destroy($id);
+        $stand = StandModel::find($id);
+
+        // Cek apakah ada produk yang terkait dengan stand
+        if ($stand->produk()->exists()) {
+            // Jika ada produk terkait, hapus semua produk terkait dengan stand
+            $stand->produk()->delete();
+        }
+
+        // Setelah menghapus produk terkait (jika ada), hapus stand
+        $stand->delete();
+
         return redirect('/stand')->with('success', 'Data Berhasil Dihapus!');
     }
 }

@@ -77,9 +77,19 @@ class SatuanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $id)
     {
-        SatuanModel::destroy($id);
-        return redirect('/satuan')->with('success', 'Data Berhasil Dihapus!');
+        $satuan = SatuanModel::find($id);
+
+        // Cek apakah satuan memiliki keterkaitan dengan produk
+        if ($satuan->produk()->exists()) {
+            return redirect('/satuan')->with('error', 'Tidak dapat menghapus satuan yang memiliki keterkaitan dengan produk!');
+        }
+
+        // Jika tidak ada keterkaitan, hapus satuan
+        $satuan->delete();
+
+        return redirect('/satuan')->with('success', 'Data Berhasil Dihapus!');
     }
 }

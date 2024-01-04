@@ -11,4 +11,8 @@ class SatuanModel extends Model
     protected $table = 'satuan';
 
     protected $guarded = [];
+    public function produk()
+    {
+        return $this->hasMany(ProdukModel::class, 'satuan_id');
+    }
 }

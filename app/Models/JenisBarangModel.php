@@ -14,6 +14,10 @@ class JenisBarangModel extends Model
     public function users()
 
     {
-        return $this->belongsTo(UsersModel::class, 'jenis_barang');
+        return $this->belongsTo(User::class, 'jenis_barang');
+    }
+    public function produk()
+    {
+        return $this->hasMany(ProdukModel::class, 'jenis_barang_id');
     }
 }

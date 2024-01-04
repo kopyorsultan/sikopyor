@@ -20,6 +20,13 @@
                             </button>
                         </div>
                     @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            </button>
+                        </div>
+                    @endif
                     <div class="table-responsive text-nowrap">
                         <table class="table table-bordered">
                             <thead>
@@ -48,7 +55,7 @@
                                                         @method('delete')
                                                         @csrf
                                                         <button class="dropdown-item" type="submit"
-                                                            onclick="return confirm('Apakah anda yakin untuk hapus data Users?')">
+                                                            onclick="return confirm('Apakah anda yakin untuk hapus data Satuan?')">
                                                             <i class="bx bx-trash me-1"></i> Delete</button>
                                                     </form>>
                                                 </div>

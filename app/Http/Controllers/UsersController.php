@@ -106,7 +106,16 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        User::destroy($id);
-        return redirect('/users')->with('success', 'Data Berhasil Dihapus!');
+        $user = User::find($id);
+
+        // Cek apakah pengguna memiliki keterkaitan dengan stand
+        if ($user->stands()->exists()) {
+            return redirect('/users')->with('error', 'Tidak dapat menghapus pengguna yang memiliki keterkaitan dengan stand!');
+        }
+
+        // Jika tidak ada keterkaitan, hapus pengguna
+        $user->delete();
+
+        return redirect('/users')->with('success', 'Data Berhasil Dihapus!');
     }
 }

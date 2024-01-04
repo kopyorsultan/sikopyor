@@ -83,7 +83,16 @@ class JenisBarangController extends Controller
      */
     public function destroy(string $id)
     {
-        JenisBarangModel::destroy($id);
-        return redirect('/jenis-barang')->with('success', 'Data Berhasil Dihapus!');
+        $jenisbarang = JenisBarangModel::find($id);
+
+        // Cek apakah satuan memiliki keterkaitan dengan produk
+        if ($jenisbarang->produk()->exists()) {
+            return redirect('/jenis-barang')->with('error', 'Tidak dapat menghapus jenis barang yang memiliki keterkaitan dengan produk!');
+        }
+
+        // Jika tidak ada keterkaitan, hapus satuan
+        $jenisbarang->delete();
+
+        return redirect('/jenis-barang')->with('success', 'Data Berhasil Dihapus!');
     }
 }

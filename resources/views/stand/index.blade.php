@@ -54,7 +54,7 @@
                                                         @method('delete')
                                                         @csrf
                                                         <button class="dropdown-item" type="submit"
-                                                            onclick="return confirm('Apakah anda yakin untuk hapus data Users?')">
+                                                            onclick="return confirm('Apakah anda yakin untuk hapus data Stand dan data yang terkait?')">
                                                             <i class="bx bx-trash me-1"></i> Delete</button>
                                                     </form>>
                                                 </div>
