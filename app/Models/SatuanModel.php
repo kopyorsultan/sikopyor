@@ -15,4 +15,13 @@ class SatuanModel extends Model
     {
         return $this->hasMany(ProdukModel::class, 'satuan_id');
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($satuan) {
+            // Set nilai satuan_id pada semua produk yang memiliki satuan ini menjadi null
+            $satuan->produk()->update(['satuan_id' => null]);
+        });
+    }
 }
